@@ -3,11 +3,9 @@ import streamlit as st
 import json
 import time
 
-path = r".\config.json"
-with open(path, "r") as config_file:
-    cred = json.load(config_file)
+uploaded_file = st.file_uploader('config.json')
 
-api_key = cred["openAI"]["secret_key"]["key"]
+api_key = uploaded_file["openAI"]["secret_key"]["key"]
 
 
 def enable_chat_history(func):
