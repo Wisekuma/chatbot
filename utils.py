@@ -3,8 +3,8 @@ import streamlit as st
 import json
 import time
 
-uploaded_file = st.file_uploader('config.json')
-with open(uploaded_file, "r") as config_file:
+path = r"config.json"
+with open(path, "r") as config_file:
     cred = json.load(config_file)
 
 api_key = cred["openAI"]["secret_key"]["key"]
