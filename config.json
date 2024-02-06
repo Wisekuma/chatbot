@@ -1,0 +1,12 @@
+{
+    "openAI": {
+        "secret_key": { 
+            "key": "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"
+        }
+    },
+    "llama": {
+        "secret_key": { 
+            "key": "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"
+        }
+    }
+}
