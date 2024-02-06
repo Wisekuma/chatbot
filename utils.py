@@ -3,7 +3,7 @@ import streamlit as st
 import json
 import time
 
-path = r"G:\PythonCode\Research\config\config.json"
+path = r".\config.json"
 with open(path, "r") as config_file:
     cred = json.load(config_file)
 
