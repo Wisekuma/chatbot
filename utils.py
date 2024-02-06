@@ -4,8 +4,10 @@ import json
 import time
 
 uploaded_file = st.file_uploader('config.json')
+with open(uploaded_file, "r") as config_file:
+    cred = json.load(config_file)
 
-api_key = uploaded_file["openAI"]["secret_key"]["key"]
+api_key = cred["openAI"]["secret_key"]["key"]
 
 
 def enable_chat_history(func):
