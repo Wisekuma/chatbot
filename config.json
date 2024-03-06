@@ -1,7 +1,7 @@
 {
     "openAI": {
         "secret_key": { 
-            "key": "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"
+            "key": "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"
         }
     },
     "llama": {
