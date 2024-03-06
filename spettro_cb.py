@@ -44,7 +44,8 @@ if elapsed_time > 400:
 
 selected_prompt = PROMPT_GENERAL if st.session_state.get('current_prompt', 'general') == 'general' else PROMPT_MILITARY_BUDGET
 
-def setup_logging():
+@st.cache_resource
+def setup_logging(level=logging.DEBUG):
     logger = logging.getLogger('FriendBotLogger')
     logger.setLevel(logging.INFO)  # Set the logging level
 
