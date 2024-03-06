@@ -22,6 +22,9 @@ PROMPT_MILITARY_BUDGET = PromptTemplate(input_variables=["history", "input"], te
 PROMPT_GENERAL = PromptTemplate(input_variables=["history", "input"], template=control_prompt_general_conversation)
 
 password = st.text_input("Enter your password", type="password")
+log_file_name = f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log"
+logger.add(log_file_name, rotation="10 MB", retention="10 days")
+st.session_state['log_file_path'] = log_file_name
 
 if password:  
     st.success("Key accepted.")
@@ -44,8 +47,19 @@ if elapsed_time > 400:
 
 selected_prompt = PROMPT_GENERAL if st.session_state.get('current_prompt', 'general') == 'general' else PROMPT_MILITARY_BUDGET
 
+def get_log_file_content():
+    """Read the log file content and return it."""
+    with open(st.session_state['log_file_path'], 'r') as file:
+        return file.read()
 
-logger.add(f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log", rotation="10 MB", retention="10 days")
+if st.button('Download Log File'):
+    log_file_content = get_log_file_content()
+    st.download_button(
+        label="Download Log",
+        data=log_file_content,
+        file_name=st.session_state['log_file_path'],
+        mime='text/plain'
+    )
 
 class FriendBot:
     def __init__(self, selected_prompt):
