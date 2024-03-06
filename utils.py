@@ -3,11 +3,11 @@ import streamlit as st
 import json
 import time
 
-path = r"config.json"
-with open(path, "r") as config_file:
-    cred = json.load(config_file)
+# path = r"config.json"
+# with open(path, "r") as config_file:
+#     cred = json.load(config_file)
 
-api_key = cred["openAI"]["secret_key"]["key"]
+# api_key = cred["openAI"]["secret_key"]["key"]
 
 
 def enable_chat_history(func):
@@ -50,7 +50,7 @@ def display_msg(msg, author):
     st.chat_message(author).write(msg)
 
 
-def configure_openai_api_key():
+def configure_openai_api_key(api_key):
     openai_api_key = api_key
 
     if openai_api_key:

@@ -21,6 +21,15 @@ control_prompt_general_conversation = """The user is deciding between increasing
 PROMPT_MILITARY_BUDGET = PromptTemplate(input_variables=["history", "input"], template=control_prompt_military_budget)
 PROMPT_GENERAL = PromptTemplate(input_variables=["history", "input"], template=control_prompt_general_conversation)
 
+password = st.text_input("Enter your password", type="password")
+
+if password:  
+    st.success("Key accepted.")
+    
+else:
+    if password:
+        st.error("The key is incorrect. Please try again.")
+
 if 'start_time' not in st.session_state:
     st.session_state['start_time'] = time.time()
 
@@ -52,7 +61,7 @@ def setup_logging():
 class FriendBot:
     def __init__(self, selected_prompt):
         self.selected_prompt = selected_prompt
-        utils.configure_openai_api_key()
+        utils.configure_openai_api_key(password)
         self.logger = setup_logging()
     @st.cache_resource
     def setup_LLM_chain(_self):
