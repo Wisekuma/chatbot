@@ -21,7 +21,7 @@ control_prompt_general_conversation = """The user is deciding between increasing
 PROMPT_MILITARY_BUDGET = PromptTemplate(input_variables=["history", "input"], template=control_prompt_military_budget)
 PROMPT_GENERAL = PromptTemplate(input_variables=["history", "input"], template=control_prompt_general_conversation)
 
-password = st.text_input("Enter your password", type="password")
+password = st.text_input("Enter your API Key:", type="password")
 log_file_name = f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log"
 logger.add(log_file_name, rotation="10 MB", retention="10 days")
 st.session_state['log_file_path'] = log_file_name
@@ -81,15 +81,6 @@ class FriendBot:
                 logger.info(f"Assistant: {response}")  
                 
                 
-def create_log_download_button(log_filename):
-    with open(log_filename, "rb") as f:
-        st.download_button(
-            label="Download log file",
-            data=f,
-            file_name=log_filename,
-            mime="text/plain"
-        )
-        
 if __name__ == "__main__":
     obj = FriendBot(selected_prompt)
     obj.main()
