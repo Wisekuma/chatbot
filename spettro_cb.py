@@ -1,6 +1,5 @@
 import utils
 import streamlit as st
-import logging
 from datetime import datetime
 from streaming import StreamHandler
 from langchain.llms import OpenAI
@@ -8,6 +7,7 @@ from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts.prompt import PromptTemplate
 import time
+from loguru import logger  
 
 # to run this: streamlit run .\spettro_cb.py
 
@@ -44,26 +44,15 @@ if elapsed_time > 400:
 
 selected_prompt = PROMPT_GENERAL if st.session_state.get('current_prompt', 'general') == 'general' else PROMPT_MILITARY_BUDGET
 
-@st.cache_resource
-def setup_logging(level=logging.DEBUG):
-    logger = logging.getLogger('FriendBotLogger')
-    logger.setLevel(logging.INFO)  # Set the logging level
 
-    now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    fh = logging.FileHandler(f'friendbot_logs_{now}.log')
-    fh.setLevel(logging.INFO)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh.setFormatter(formatter)
-
-    logger.addHandler(fh)
-    return logger
+logger.add(f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log", rotation="10 MB", retention="10 days")
 
 class FriendBot:
     def __init__(self, selected_prompt):
         self.selected_prompt = selected_prompt
         utils.configure_openai_api_key(password)
-        self.logger = setup_logging()
+        
+        
     @st.cache_resource
     def setup_LLM_chain(_self):
         memory = ConversationBufferMemory()
@@ -82,15 +71,15 @@ class FriendBot:
         
         if query:
             utils.display_msg(query, "user")
-            self.logger.info(f"User: {query}")
+            logger.info(f"User: {query}")  
             with st.chat_message("assistant"):
                 st_cb = StreamHandler(st.empty())
                 response = chain.run(query, callbacks=[st_cb])
                 st.session_state.messages.append(
                     {"role": "assistant", "content": response}
                 )
-                self.logger.info(f"Assistant: {response}")
-
+                logger.info(f"Assistant: {response}")  
+                
 if __name__ == "__main__":
     obj = FriendBot(selected_prompt)
     obj.main()
