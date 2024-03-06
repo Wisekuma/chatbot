@@ -23,7 +23,7 @@ PROMPT_GENERAL = PromptTemplate(input_variables=["history", "input"], template=c
 
 password = st.text_input("Enter your API Key:", type="password")
 log_file_name = f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log"
-logger.add(log_file_name, rotation="10 MB", retention="10 days")
+logger.add(log_file_name, rotation="100 MB", retention="10 days")
 st.session_state['log_file_path'] = log_file_name
 
 if password:  
