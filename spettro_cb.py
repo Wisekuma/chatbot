@@ -47,20 +47,6 @@ if elapsed_time > 400:
 
 selected_prompt = PROMPT_GENERAL if st.session_state.get('current_prompt', 'general') == 'general' else PROMPT_MILITARY_BUDGET
 
-def get_log_file_content():
-    """Read the log file content and return it."""
-    with open(st.session_state['log_file_path'], 'r') as file:
-        return file.read()
-
-if st.button('Download Log File'):
-    log_file_content = get_log_file_content()
-    st.download_button(
-        label="Download Log",
-        data=log_file_content,
-        file_name=st.session_state['log_file_path'],
-        mime='text/plain'
-    )
-
 class FriendBot:
     def __init__(self, selected_prompt):
         self.selected_prompt = selected_prompt
@@ -94,6 +80,16 @@ class FriendBot:
                 )
                 logger.info(f"Assistant: {response}")  
                 
+                
+def create_log_download_button(log_filename):
+    with open(log_filename, "rb") as f:
+        st.download_button(
+            label="Download log file",
+            data=f,
+            file_name=log_filename,
+            mime="text/plain"
+        )
+        
 if __name__ == "__main__":
     obj = FriendBot(selected_prompt)
     obj.main()
