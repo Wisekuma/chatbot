@@ -27,16 +27,7 @@ log_file_name = f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log"
 logger.add(log_file_name, rotation="100 MB", retention="10 days")
 st.session_state['log_file_path'] = log_file_name
 
-# if password:  
-#     st.success("Key accepted.")
-    
-# else:
-#     if password:
-#         st.error("The key is incorrect. Please try again.")
-
-#st.write("API Key:", st.secrets["db_credentials"]["api_key"])
 password = st.secrets["db_credentials"]["api_key"]
-#os.environ["db_credentials"]["api_key"] == st.secrets["db_credentials"]["api_key"]
 
 
 if 'start_time' not in st.session_state:
