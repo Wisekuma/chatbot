@@ -36,7 +36,7 @@ st.session_state['log_file_path'] = log_file_name
 
 #st.write("API Key:", st.secrets["db_credentials"]["api_key"])
 password = st.secrets["db_credentials"]["api_key"]
-os.environ["db_credentials"]["api_key"] == st.secrets["db_credentials"]["api_key"]
+#os.environ["db_credentials"]["api_key"] == st.secrets["db_credentials"]["api_key"]
 
 
 if 'start_time' not in st.session_state:
