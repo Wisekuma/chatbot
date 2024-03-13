@@ -34,12 +34,10 @@ st.session_state['log_file_path'] = log_file_name
 #     if password:
 #         st.error("The key is incorrect. Please try again.")
 
-st.write("API Key:", st.secrets["db_credentials"]["api_key"])
+#st.write("API Key:", st.secrets["db_credentials"]["api_key"])
 password = st.secrets["db_credentials"]["api_key"]
-st.write(
-    "Has environment variables been set:",
-    os.environ["db_credentials"]["api_key"] == st.secrets["db_credentials"]["api_key"],
-)
+os.environ["db_credentials"]["api_key"] == st.secrets["db_credentials"]["api_key"]
+
 
 if 'start_time' not in st.session_state:
     st.session_state['start_time'] = time.time()
