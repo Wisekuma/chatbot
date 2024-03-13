@@ -1,3 +1,4 @@
+import os
 import utils
 import streamlit as st
 from datetime import datetime
@@ -26,12 +27,18 @@ log_file_name = f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log"
 logger.add(log_file_name, rotation="100 MB", retention="10 days")
 st.session_state['log_file_path'] = log_file_name
 
-if password:  
-    st.success("Key accepted.")
+# if password:  
+#     st.success("Key accepted.")
     
-else:
-    if password:
-        st.error("The key is incorrect. Please try again.")
+# else:
+#     if password:
+#         st.error("The key is incorrect. Please try again.")
+
+st.write("API Key:", st.secrets["api_key"])
+st.write(
+    "Has environment variables been set:",
+    os.environ["api_key"] == st.secrets["api_key"],
+)
 
 if 'start_time' not in st.session_state:
     st.session_state['start_time'] = time.time()
