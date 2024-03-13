@@ -22,7 +22,7 @@ control_prompt_general_conversation = """The user is deciding between increasing
 PROMPT_MILITARY_BUDGET = PromptTemplate(input_variables=["history", "input"], template=control_prompt_military_budget)
 PROMPT_GENERAL = PromptTemplate(input_variables=["history", "input"], template=control_prompt_general_conversation)
 
-password = st.text_input("Enter your API Key:", type="password")
+#password = st.text_input("Enter your API Key:", type="password")
 log_file_name = f"friendbot_logs_{datetime.now():%Y-%m-%d_%H-%M-%S}.log"
 logger.add(log_file_name, rotation="100 MB", retention="10 days")
 st.session_state['log_file_path'] = log_file_name
@@ -34,10 +34,11 @@ st.session_state['log_file_path'] = log_file_name
 #     if password:
 #         st.error("The key is incorrect. Please try again.")
 
-st.write("API Key:", st.secrets["api_key"])
+st.write("API Key:", st.secrets["db_credentials"]["api_key"])
+password = st.secrets["db_credentials"]["api_key"]
 st.write(
     "Has environment variables been set:",
-    os.environ["api_key"] == st.secrets["api_key"],
+    os.environ["db_credentials"]["api_key"] == st.secrets["db_credentials"]["api_key"],
 )
 
 if 'start_time' not in st.session_state:
